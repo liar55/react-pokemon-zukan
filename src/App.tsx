@@ -2,10 +2,10 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-
+ 
 function App() {
   const [count, setCount] = useState(0)
-
+ 
   return (
     <>
       <div>
@@ -31,5 +31,22 @@ function App() {
     </>
   )
 }
-
+ 
 export default App
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import PokemonList from './pages/PokemonList';
+import PokemonDetail from './pages/PokemonDetail';
+
+const App: React.FC = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<PokemonList />} />
+      <Route path="/pokemon/:id" element={<PokemonDetail />} />
+    </Routes>
+  );
+};
+
+export default App;
+ 
+
