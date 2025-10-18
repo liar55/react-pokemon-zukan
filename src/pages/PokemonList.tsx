@@ -1,11 +1,14 @@
 // src/pages/PokemonList.tsx
-import React, { useEffect, useRef } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { apiQueryKeys } from '../queryKeys';
-import { fetchPokemonListWithJapaneseNames, PokemonWithJapaneseName } from '../api/pokemonWithJapaneseName';
-import PokemonCard from '../components/PokemonCard';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import React, { useEffect, useRef } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { apiQueryKeys } from "../queryKeys";
+import {
+  fetchPokemonListWithJapaneseNames,
+  type PokemonWithJapaneseName,
+} from "../api/pokemonWithJapaneseName.ts";
+import PokemonCard from "../components/PokemonCard.tsx";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const PokemonList: React.FC = () => {
   const {
@@ -17,7 +20,8 @@ const PokemonList: React.FC = () => {
     isLoading,
   } = useInfiniteQuery({
     queryKey: [apiQueryKeys.pokemon.list()],
-    queryFn: ({ pageParam = 0 }) => fetchPokemonListWithJapaneseNames(pageParam),
+    queryFn: ({ pageParam = 0 }) =>
+      fetchPokemonListWithJapaneseNames(pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.next) {
@@ -47,7 +51,7 @@ const PokemonList: React.FC = () => {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (isLoading) return <PokemonListSkeleton />;
-  if (status === 'error') return <div>エラーが発生しました</div>;
+  if (status === "error") return <div>エラーが発生しました</div>;
 
   return (
     <div className="p-4">
@@ -59,7 +63,7 @@ const PokemonList: React.FC = () => {
         )}
       </div>
       <div ref={loadMoreRef} className="h-20 flex items-center justify-center">
-        {isFetchingNextPage ? <Loader /> : hasNextPage ? '続きを読み込む' : ''}
+        {isFetchingNextPage ? <Loader /> : hasNextPage ? "続きを読み込む" : ""}
       </div>
     </div>
   );
@@ -90,4 +94,3 @@ const PokemonListSkeleton: React.FC = () => {
 };
 
 export default PokemonList;
-
